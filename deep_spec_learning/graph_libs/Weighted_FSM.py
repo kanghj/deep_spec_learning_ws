@@ -209,7 +209,7 @@ class WeightedAutomataGraph:
             del probs[index]
             del next_ones[index]
 
-        print('find_random_walk returning None since a random walk was enever found')
+        # print('find_random_walk returning None since a random walk was enever found')
         return None
 
     ##################################################################
@@ -224,8 +224,8 @@ class WeightedAutomataGraph:
             acceptance_rates += [(name, ratio)]
             unaccepted_traces.update(set(rejects))
             i += 1
-            if i % 100 == 0 :
-                print("done with ", i , " out of ", highest)
+            # if i % 100 == 0 :
+            #     print("done with ", i , " out of ", highest)
         return acceptance_rates, list(unaccepted_traces),
 
     def is_accepted(self, node, index, tr, ignore_suffix=False, ignore_return_value=False, debug=False):
@@ -261,7 +261,7 @@ class WeightedAutomataGraph:
                     # print "\tGo to new state", index, nxt, label
                 if self.is_accepted(nxt, index + 1, tr, ignore_suffix=ignore_suffix,
                                     ignore_return_value=ignore_return_value, debug=debug):
-                    print('accepted')
+                    # print('accepted')
                     return True
         # sys.stderr.write("reject," + str(tr[:index]) + ' >' + str(tr[index]) + '<\n')
         return False
