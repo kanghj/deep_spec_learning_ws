@@ -73,35 +73,6 @@ def avg_of_rates(rates):
     return lib.avg_of([x[1] for x in rates])
 
 
-def write_statistics(precision_rates, recall_rates, outfile):
-    name_set = set([x[0] for x in precision_rates] + [x[0] for x in recall_rates])
-    precision_map = {x[0]: x[1] for x in precision_rates}
-    recall_map = {x[0]: x[1] for x in recall_rates}
-    with open(outfile, 'w') as writer:
-        # f1_arr = []
-        #
-        # for name in name_set:
-        #     if name not in precision_map or name not in recall_map:
-        #         continue
-        #     p = precision_map[name]
-        #     r = recall_map[name]
-        #     f1 = compute_f1(p, r)
-        #     f1_arr += [(p, r, f1)]
-
-        # f1_arr = sorted(f1_arr, key=lambda x: x[2], reverse=True)
-        # writer.write('Best_Pairs:\n')
-        # for (p, r, f1) in f1_arr[:3]:
-        #     writer.write(str(p) + '\t' + str(r) + '\t' + str(f1) + '\n')
-
-        writer.write('Max_One: ')
-
-        max_precision = max([x[1] for x in precision_rates])
-        max_recall = max([x[1] for x in recall_rates])
-        max_f1 = compute_f1(max_precision, max_recall)
-
-        writer.write(str(max_precision) + '\t' + str(max_recall) + '\t' + str(max_f1) + '\n')
-        return (max_precision, max_recall, max_f1)
-
 
 def handle(fsm_model_file, gt_model_file, fsm_trace_folder, gt_trace_folder, output_folder, ignore_suffix=False):
     gt_model = graph_lib.create_graph(gt_model_file)
@@ -169,9 +140,8 @@ def compute_results_statistics(fsm_model, fsm_traces, gt_model, gt_traces, outpu
     write_rejected_seed_traces((avg_precision, avg_recall, avg_f1), rejected_by_ground_truth,
                                rejected_by_inferred_model,
                                output_folder)
-    best_results = write_statistics(precision_rates, recall_rates, output_folder + '/best_results.txt')
     output_list_precisions_recalls_f1(precision_rates, recall_rates, output_folder + '/result_stats.txt')
-    return (avg_precision, avg_recall, avg_f1), best_results
+    return avg_precision, avg_recall, avg_f1
 
 
 def generate_trace(max_label_repeated_per_trace, min_overall_coverage_per_label, seed_list, model_file, output_folder,

@@ -295,7 +295,7 @@ class WeightedAutomataGraph:
                 accepted_count += traces[tr] if in_traces_is_dict else 1
             else:
                 unaccepted_traces += [tr]
-            print('done with ', accepted_count + len(unaccepted_traces), ' of ', len_traces)
+            # print('done with ', accepted_count + len(unaccepted_traces), ' of ', len_traces)
         if total_traces == 0:
             print("total trace is 0")
             return 1.0, unaccepted_traces
